@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<modDesc descVersion="79">
+    <author>Farmsim Tim (timmeey86)</author>
+    <version>0.0.0.1</version>
+    <title>
+        <en>Unload Bales Early</en>
+        <de>Ballen frühzeitig abladen</de>
+    </title>
+    
+    <description>
+        <en><![CDATA[This mod allows unloading bales at any time, provided they already have a volume of at least 2000 liters]]></en>
+        <de><![CDATA[Diese Mod erlaubt es jederzeit, Ballen abzuladen, solange diese bereits mindestens 2000 Liter Volumen haben.]]></de>
+    </description>
+    
+    <multiplayer supported="true" />
+
+    <iconFilename>icon_UnloadBalesEarly.dds</iconFilename>
+
+    <extraSourceFiles>
+        <sourceFile filename="scripts/UnloadBalesEarly.lua" />
+    </extraSourceFiles>
+</modDesc>

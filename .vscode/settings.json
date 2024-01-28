@@ -1,0 +1,8 @@
+{
+    "Lua.diagnostics.globals": [
+        "g_currentModDirectory",
+        "g_currentModName",
+        "Baler",
+        "Utils"
+    ]
+}
