@@ -2,6 +2,8 @@
 
 ## Mod description
 
+THIS MOD DOES NOT WORK YET
+
 This mod for Farming Simulator 22 alles unloading any kind of bale (straw, hay, grass, poplar, cotton, ...) as long as it has at least 2000 liters
 
 ## How to install
