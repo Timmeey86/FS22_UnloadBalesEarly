@@ -2,7 +2,17 @@
 
 ## Mod description
 
-THIS MOD DOES NOT WORK YET
+The mod currently works well for:
+- Square balers
+
+The mod works in principle but causes bales to suddenly grow a lot in size for:
+- Round balers
+- Bio baler
+- Square Cotton Balers
+
+The mod does not work yet for:
+- Baler/wrapper combos
+- Two-chamber round Cotton Balers
 
 This mod for Farming Simulator 22 allows unloading any kind of bale (straw, hay, grass, poplar, cotton, ...) as long as it has at least 2000 liters
 
