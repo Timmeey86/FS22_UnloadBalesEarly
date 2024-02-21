@@ -3,6 +3,9 @@
         "g_currentModDirectory",
         "g_currentModName",
         "Baler",
-        "Utils"
+        "Utils",
+        "InputAction",
+        "g_inputBinding",
+        "Class"
     ]
 }
