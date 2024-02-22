@@ -6,6 +6,7 @@
         "Utils",
         "InputAction",
         "g_inputBinding",
-        "Class"
+        "Class",
+        "GS_PRIO_HIGH"
     ]
 }

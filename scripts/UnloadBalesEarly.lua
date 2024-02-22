@@ -17,7 +17,8 @@ function UnloadBalesEarly.onBalerLoad(baler, superFunc, savegame)
 
 	-- Allow unloading bales early for every single baler
     print(("%s: Forcing early unload possibility for %s %s '%s' at '%d' liters"):format(MOD_NAME, baler.typeName, baler.brand.title, baler.configFileNameClean, spec.unfinishedBaleThreshold))
-    spec.canUnloadUnfinishedBale = true
+    spec.unloadBalesEarlyEnabled = not spec.canUnloadUnfinishedBale
+	spec.canUnloadUnfinishedBale = true
 	spec.unfinishedBaleThreshold = 500
 end
 Baler.onLoad = Utils.overwrittenFunction(Baler.onLoad, UnloadBalesEarly.onBalerLoad)
@@ -57,3 +58,42 @@ end)
 Baler.createBale = Utils.overwrittenFunction(Baler.createBale, function(baler, superFunc, baleFillType, fillLevel, baleServerId, baleTime, xmlFileName)
 	return unloadBalesEarly:interceptBaleCreation(baler, superFunc, baleFillType, fillLevel, baleServerId, baleTime, xmlFileName)
 end)
+
+-- Register hotkeys for unloading all in addition to the base game ones
+function UnloadBalesEarly.updateActionEvents(baler, superFunc)
+
+	-- Enable base game actions
+	superFunc(baler)
+
+	-- Enable the unload early option when necessary
+	local spec = baler.spec_baler
+    local actionEvent = spec.actionEvents[InputAction.TOGGLE_PIPE]
+    if actionEvent ~= nil then
+		local showAction = false
+        if baler:isUnloadingAllowed() and (spec.hasUnloadingAnimation or spec.allowsBaleUnloading) then
+			if spec.unloadingState == Baler.UNLOADING_CLOSED then
+				if baler:getCanUnloadUnfinishedBale() and not spec.platformReadyToDrop then
+					g_inputBinding:setActionEventText(actionEvent.actionEventId, spec.texts.unloadUnfinishedBale)
+					showAction = true
+				end
+			end
+			g_inputBinding:setActionEventActive(actionEvent.actionEventId, showAction)
+		end
+    end
+end
+function UnloadBalesEarly.onRegisterActionEvents(baler, superFunc, isActiveForInput, isActiveForInputIgnoreSelection)
+	-- Create he base game actions first - this will clear the event list
+	superFunc(baler, isActiveForInput, isActiveForInputIgnoreSelection)
+
+	-- Now add an "unload now" option for balers which don't have them
+	local spec = baler.spec_baler
+	if baler.isClient and isActiveForInputIgnoreSelection then
+		local _, actionEventId = baler:addPoweredActionEvent(spec.actionEvents, InputAction.TOGGLE_PIPE, baler, Baler.actionEventUnloading, false, true, false, true, nil)
+		g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_HIGH)
+	end
+
+	-- Upadet action events again to include our new option
+	Baler.updateActionEvents(baler)
+end
+Baler.updateActionEvents = Utils.overwrittenFunction(Baler.updateActionEvents, UnloadBalesEarly.updateActionEvents)
+Baler.onRegisterActionEvents = Utils.overwrittenFunction(Baler.onRegisterActionEvents, UnloadBalesEarly.onRegisterActionEvents)
