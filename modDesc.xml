@@ -4,7 +4,7 @@
     <version>0.0.0.2</version>
     <title>
         <en>Unload Bales Early</en>
-        <de>Ballen frühzeitig abladen</de>
+        <de>Ballen Frühzeitig Abladen</de>
     </title>
     
     <description>
@@ -17,6 +17,26 @@
     <iconFilename>icon_UnloadBalesEarly.dds</iconFilename>
 
     <extraSourceFiles>
+        <sourceFile filename="scripts/UnloadBalesSettingsChangeEvent.lua" />
+        <sourceFile filename="scripts/UnloadBalesSettings.lua" />
+        <sourceFile filename="scripts/UnloadBalesSettingsRepository.lua" />
+        <sourceFile filename="scripts/UnloadBalesUI.lua" />
+        <sourceFile filename="scripts/EarlyUnloadHandler.lua" />
         <sourceFile filename="scripts/UnloadBalesEarly.lua" />
     </extraSourceFiles>
+
+    <l10n>
+        <text name="ub_group_title">
+            <en>Unload Bales Early</en>
+            <de>Ballen Frühzeitig Abladen</de>
+        </text>
+        <text name="ub_unload_threshold_label">
+            <en>Unload Threshold</en>
+            <de>Ablade-Schwelle</de>
+        </text>
+        <text name="ub_unload_threshold_desc">
+            <en>Bales can be unloaded early if the baler is filled more than this percentage.</en>
+            <de>Ballen können frühzeitig abgeladen werden, wenn die Ballenpresse mehr gefüllt ist als dieser Prozentwert.</de>
+        </text>
+    </l10n>
 </modDesc>

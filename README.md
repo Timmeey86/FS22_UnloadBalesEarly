@@ -9,7 +9,7 @@ The mod will receive configuration options before being submitted to modhub
 
 Original mod idea: https://github.com/Mogli12/UnfinishedBales
 
-Source code has been written from scratch.
+Source code has been written from scratch since FS22 requires a different approach for the same result
 
 ## How to install
 

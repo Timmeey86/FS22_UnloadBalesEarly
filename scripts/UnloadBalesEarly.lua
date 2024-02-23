@@ -2,103 +2,50 @@ local modDirectory = g_currentModDirectory or ""
 MOD_NAME = g_currentModName or "unknown"
 
 UnloadBalesEarly = {}
-UnloadBalesEarly_mt = Class(UnloadBalesEarly)
-function UnloadBalesEarly.new()
-	local self = setmetatable({}, UnloadBalesEarly_mt)
-	self.overrideFillLevel = -1
-	return self
-end
 
-function UnloadBalesEarly.onBalerLoad(baler, superFunc, savegame)
-    local spec = baler.spec_baler
+---------------------------
+--- Enable early unload ---
+---------------------------
 
-	-- Execute base game behavior first
-    superFunc(baler, savegame)
-
-	-- Allow unloading bales early for every single baler
-    print(("%s: Forcing early unload possibility for %s %s '%s' at '%d' liters"):format(MOD_NAME, baler.typeName, baler.brand.title, baler.configFileNameClean, spec.unfinishedBaleThreshold))
-    spec.unloadBalesEarlyEnabled = not spec.canUnloadUnfinishedBale
-	spec.canUnloadUnfinishedBale = true
-	spec.unfinishedBaleThreshold = 500
-end
-Baler.onLoad = Utils.overwrittenFunction(Baler.onLoad, UnloadBalesEarly.onBalerLoad)
-
-
-function UnloadBalesEarly:onHandleUnloadingBaleEvent(baler, superFunc)
-	local spec = baler.spec_baler
-	if spec.unloadingState == Baler.UNLOADING_CLOSED and #spec.bales == 0 and baler:getCanUnloadUnfinishedBale() then
-		-- Remember the current fill level of the baler
-		self.overrideFillLevel = baler:getFillUnitFillLevel(spec.fillUnitIndex)
-		-- Set the bale to max fill level so the physics doesn't bug out when unloading
-		local maxFillLevel = baler:getFillUnitCapacity(spec.fillUnitIndex)
-		baler:updateDummyBale(spec.dummyBale, spec.fillTypeIndex, maxFillLevel, maxFillLevel)
-		baler:setAnimationTime(spec.baleTypes[spec.currentBaleTypeIndex].animations.fill, 1)
-		-- Finish the bale, which will override the fill level
-		baler:finishBale()
-		-- Reset the override so other bales will not fail
-		self.overrideFillLevel = -1
-	end
-
-	-- Now that we made sure a bale was created if necessary, call the base game behavior
-	superFunc(baler)
-end
-
-function UnloadBalesEarly:interceptBaleCreation(baler, superFunc, baleFillType, fillLevel, baleServerId, baleTime, xmlFileName)
-	local adjustedFillLevel = fillLevel
-	-- Override the fill level when unloading an unfinished bale
-	if self.overrideFillLevel >= 0 then
-		adjustedFillLevel = self.overrideFillLevel
-	end
-	-- Call the base game behavior with the adjusted fill level
-	return superFunc(baler, baleFillType, adjustedFillLevel, baleServerId, baleTime, xmlFileName)
-end
-
--- Create an instance so we can persist variables
-local unloadBalesEarly = UnloadBalesEarly.new()
-
+-- Create a handler for bale unloading
+local earlyUnloadHandler = EarlyUnloadHandler.new()
 -- Override methods and inject the instance into the calls so the required variables can be accessed
 Baler.handleUnloadingBaleEvent = Utils.overwrittenFunction(Baler.handleUnloadingBaleEvent, function(baler, superFunc)
-	unloadBalesEarly:onHandleUnloadingBaleEvent(baler, superFunc)
+	earlyUnloadHandler:onHandleUnloadingBaleEvent(baler, superFunc)
 end)
 Baler.createBale = Utils.overwrittenFunction(Baler.createBale, function(baler, superFunc, baleFillType, fillLevel, baleServerId, baleTime, xmlFileName)
-	return unloadBalesEarly:interceptBaleCreation(baler, superFunc, baleFillType, fillLevel, baleServerId, baleTime, xmlFileName)
+	return earlyUnloadHandler:interceptBaleCreation(baler, superFunc, baleFillType, fillLevel, baleServerId, baleTime, xmlFileName)
 end)
 
--- Register hotkeys for unloading all in addition to the base game ones
-function UnloadBalesEarly.updateActionEvents(baler, superFunc)
+-- Override methods which don't require any settings
+Baler.onLoad = Utils.overwrittenFunction(Baler.onLoad, EarlyUnloadHandler.onBalerLoad)
+Baler.updateActionEvents = Utils.overwrittenFunction(Baler.updateActionEvents, EarlyUnloadHandler.updateActionEvents)
+Baler.onRegisterActionEvents = Utils.overwrittenFunction(Baler.onRegisterActionEvents, EarlyUnloadHandler.onRegisterActionEvents)
+Baler.getCanUnloadUnfinishedBale = Utils.overwrittenFunction(Baler.getCanUnloadUnfinishedBale, EarlyUnloadHandler.getCanUnloadUnfinishedBale)
 
-	-- Enable base game actions
-	superFunc(baler)
+-----------------------
+--- Enable settings ---
+-----------------------
 
-	-- Enable the unload early option when necessary
-	local spec = baler.spec_baler
-    local actionEvent = spec.actionEvents[InputAction.TOGGLE_PIPE]
-    if actionEvent ~= nil then
-		local showAction = false
-        if baler:isUnloadingAllowed() and (spec.hasUnloadingAnimation or spec.allowsBaleUnloading) then
-			if spec.unloadingState == Baler.UNLOADING_CLOSED then
-				if baler:getCanUnloadUnfinishedBale() and not spec.platformReadyToDrop then
-					g_inputBinding:setActionEventText(actionEvent.actionEventId, spec.texts.unloadUnfinishedBale)
-					showAction = true
-				end
-			end
-			g_inputBinding:setActionEventActive(actionEvent.actionEventId, showAction)
-		end
+---Creates a settings object which can be accessed from the UI and the rest of the code
+---@param   mission     table   @The object which is later available as g_currentMission
+local function createModSettings(mission)
+	-- Register the settings object globally so we can access it from the event class and others later
+    mission.unloadBalesEarlySettings = UnloadBalesSettings.new()
+    addModEventListener(mission.unloadBalesEarlySettings)
+end
+Mission00.load = Utils.prependedFunction(Mission00.load, createModSettings)
+
+---Destroys the settings object when it is no longer needed.
+local function destroyModSettings()
+    if g_currentMission ~= nil and g_currentMission.unloadBalesEarlySettings ~= nil then
+        removeModEventListener(g_currentMission.unloadBalesEarlySettings)
+        g_currentMission.unloadBalesEarlySettings = nil
     end
 end
-function UnloadBalesEarly.onRegisterActionEvents(baler, superFunc, isActiveForInput, isActiveForInputIgnoreSelection)
-	-- Create he base game actions first - this will clear the event list
-	superFunc(baler, isActiveForInput, isActiveForInputIgnoreSelection)
+FSBaseMission.delete = Utils.appendedFunction(FSBaseMission.delete, destroyModSettings)
 
-	-- Now add an "unload now" option for balers which don't have them
-	local spec = baler.spec_baler
-	if baler.isClient and isActiveForInputIgnoreSelection then
-		local _, actionEventId = baler:addPoweredActionEvent(spec.actionEvents, InputAction.TOGGLE_PIPE, baler, Baler.actionEventUnloading, false, true, false, true, nil)
-		g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_HIGH)
-	end
-
-	-- Upade action events again to include our new option
-	Baler.updateActionEvents(baler)
-end
-Baler.updateActionEvents = Utils.overwrittenFunction(Baler.updateActionEvents, UnloadBalesEarly.updateActionEvents)
-Baler.onRegisterActionEvents = Utils.overwrittenFunction(Baler.onRegisterActionEvents, UnloadBalesEarly.onRegisterActionEvents)
+---Restore the settings when the map has finished loading
+BaseMission.loadMapFinished = Utils.prependedFunction(BaseMission.loadMapFinished, function(...)
+	UnloadBalesSettingsRepository.restoreSettings()
+end)
