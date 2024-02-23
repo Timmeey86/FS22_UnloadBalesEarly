@@ -3,18 +3,13 @@
 ## Mod description
 
 This mod for Farming Simulator 22 allows unloading any kind of bale (straw, hay, grass, poplar, cotton, ...) as long as it has at least 500 liters
+The mod is still in development but is currently in a stable state which provides the minimum functionality possible
 
-The mod currently works well for:
-- Square balers
+The mod will receive configuration options before being submitted to modhub
 
-The mod works in principle but causes bales to suddenly grow a lot in size for:
-- Round balers
-- Bio baler
-- Square Cotton Balers
+Original mod idea: https://github.com/Mogli12/UnfinishedBales
 
-The mod does not work yet for:
-- Baler/wrapper combos
-- Two-chamber round Cotton Balers
+Source code has been written from scratch.
 
 ## How to install
 

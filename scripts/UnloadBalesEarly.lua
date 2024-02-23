@@ -97,7 +97,7 @@ function UnloadBalesEarly.onRegisterActionEvents(baler, superFunc, isActiveForIn
 		g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_HIGH)
 	end
 
-	-- Upadet action events again to include our new option
+	-- Upade action events again to include our new option
 	Baler.updateActionEvents(baler)
 end
 Baler.updateActionEvents = Utils.overwrittenFunction(Baler.updateActionEvents, UnloadBalesEarly.updateActionEvents)
