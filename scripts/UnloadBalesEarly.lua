@@ -27,10 +27,15 @@ Baler.onLoad = Utils.overwrittenFunction(Baler.onLoad, UnloadBalesEarly.onBalerL
 function UnloadBalesEarly:onHandleUnloadingBaleEvent(baler, superFunc)
 	local spec = baler.spec_baler
 	if spec.unloadingState == Baler.UNLOADING_CLOSED and #spec.bales == 0 and baler:getCanUnloadUnfinishedBale() then
-		-- We are unloading a bale early, but there is no bale yet. Create one, and trigger a fill level override since otherwise a full bale
-		-- will be created
+		-- Remember the current fill level of the baler
 		self.overrideFillLevel = baler:getFillUnitFillLevel(spec.fillUnitIndex)
+		-- Set the bale to max fill level so the physics doesn't bug out when unloading
+		local maxFillLevel = baler:getFillUnitCapacity(spec.fillUnitIndex)
+		baler:updateDummyBale(spec.dummyBale, spec.fillTypeIndex, maxFillLevel, maxFillLevel)
+		baler:setAnimationTime(spec.baleTypes[spec.currentBaleTypeIndex].animations.fill, 1)
+		-- Finish the bale, which will override the fill level
 		baler:finishBale()
+		-- Reset the override so other bales will not fail
 		self.overrideFillLevel = -1
 	end
 
