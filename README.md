@@ -6,7 +6,7 @@ This mod allows unloading bales beyond a configurable threshold (default: 10%)
 
 The mod works for:
 - Round balers (including poplar bio balers)
-- Square balers
+- Square balers (only when turned off)
 - Round baler/wrapper combinations
 - One-Chamber Cotton Harvesters
 
