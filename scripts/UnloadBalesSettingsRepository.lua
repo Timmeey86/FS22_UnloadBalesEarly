@@ -18,9 +18,14 @@ end
 ---Writes the settings to our own XML file
 function UnloadBalesSettingsRepository.storeSettings()
     local xmlPath = UnloadBalesSettingsRepository.getXmlFilePath()
+    if xmlPath == nil then
+        Logging.warning(MOD_NAME .. ": Could not store settings.") -- another warning has been logged before this
+        return
+    end
+
     local settings = g_currentMission.unloadBalesEarlySettings
-    if xmlPath == nil or settings == nil then
-        Logging.warning(MOD_NAME .. ": Could not store settings")
+    if settings == nil then
+        Logging.warning(MOD_NAME .. ": Could not store settings since g_currentMission.unloadBalesEarlySettings is nil")
         return
     end
 
@@ -37,9 +42,14 @@ end
 ---Reads settings from an existing XML file, if such a file exists
 function UnloadBalesSettingsRepository.restoreSettings()
     local xmlPath = UnloadBalesSettingsRepository.getXmlFilePath()
+    if xmlPath == nil then
+        Logging.warning(MOD_NAME .. ": Could not restore settings.") -- another warning has been logged before this
+        return
+    end
+
     local settings = g_currentMission.unloadBalesEarlySettings
     if xmlPath == nil or settings == nil then
-        Logging.warning(MOD_NAME .. ": Could not read settings")
+        Logging.warning(MOD_NAME .. ": Could not read settings since g_currentMission.unloadBalesEarlySettings is nil")
         return
     end
 
@@ -77,7 +87,11 @@ function UnloadBalesSettingsRepository.getXmlFilePath()
         local savegameDirectory = g_currentMission.missionInfo.savegameDirectory
         if savegameDirectory ~= nil then
             return ("%s/%s.xml"):format(savegameDirectory, MOD_NAME)
+        else
+            Logging.warning(MOD_NAME .. ": Could not get path to UnloadBalesEarly.xml settings file since the savegame directory is nil.")
         end
+    else
+        Logging.warning(MOD_NAME .. ": Could not get path to UnloadBalesEarly.xml settings file since g_currentMission.missionInfo is nil.")
     end
     return nil
 end

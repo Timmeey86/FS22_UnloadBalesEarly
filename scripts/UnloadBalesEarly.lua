@@ -49,3 +49,5 @@ FSBaseMission.delete = Utils.appendedFunction(FSBaseMission.delete, destroyModSe
 BaseMission.loadMapFinished = Utils.prependedFunction(BaseMission.loadMapFinished, function(...)
 	UnloadBalesSettingsRepository.restoreSettings()
 end)
+-- Save settings when the savegame is being saved
+FSBaseMission.saveSavegame = Utils.appendedFunction(FSBaseMission.saveSavegame, UnloadBalesSettingsRepository.storeSettings)

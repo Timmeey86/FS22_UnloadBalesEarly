@@ -24,9 +24,11 @@ function EarlyUnloadHandler.onBalerLoad(baler, superFunc, savegame)
     superFunc(baler, savegame)
 
 	-- Allow unloading bales early for every single baler
-    print(("%s: Forcing early unload possibility for %s %s '%s' at '%d' liters"):format(MOD_NAME, baler.typeName, baler.brand.title, baler.configFileNameClean, spec.unfinishedBaleThreshold))
-    spec.EarlyUnloadHandlerEnabled = not spec.canUnloadUnfinishedBale
+    print(("%s: Forcing early unload possibility for %s %s '%s'"):format(MOD_NAME, baler.typeName, baler.brand.title, baler.configFileNameClean))
 	spec.canUnloadUnfinishedBale = true
+
+	-- TODO: Use for two-chamber cotton harvester
+	--spec.buffer.overloadingStartFillLevelPct = .1
 end
 
 ---Unloads the bale after the player pressed the hotkey
