@@ -29,6 +29,7 @@ function EarlyUnloadHandler.onBalerLoad(baler, superFunc, savegame)
 
 	-- TODO: Use for two-chamber cotton harvester
 	--spec.buffer.overloadingStartFillLevelPct = .1
+	print(("DEBUG: %s %s %s has overloadingStartFillLevelPct %d"):format(baler.typeName, baler.brand.title, baler.configFileNameClean, spec.buffer.overloadingStartFillLevelPct))
 end
 
 ---Unloads the bale after the player pressed the hotkey

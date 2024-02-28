@@ -43,7 +43,7 @@ end
 function UnloadBalesSettingsRepository.restoreSettings()
     local xmlPath = UnloadBalesSettingsRepository.getXmlFilePath()
     if xmlPath == nil then
-        Logging.warning(MOD_NAME .. ": Could not restore settings.") -- another warning has been logged before this
+        -- This is a valid case when a new game was started. The savegame path will only be available after saving once
         return
     end
 
@@ -87,8 +87,7 @@ function UnloadBalesSettingsRepository.getXmlFilePath()
         local savegameDirectory = g_currentMission.missionInfo.savegameDirectory
         if savegameDirectory ~= nil then
             return ("%s/%s.xml"):format(savegameDirectory, MOD_NAME)
-        else
-            Logging.warning(MOD_NAME .. ": Could not get path to UnloadBalesEarly.xml settings file since the savegame directory is nil.")
+        -- else: Save game directory is nil if this is a brand new save
         end
     else
         Logging.warning(MOD_NAME .. ": Could not get path to UnloadBalesEarly.xml settings file since g_currentMission.missionInfo is nil.")
