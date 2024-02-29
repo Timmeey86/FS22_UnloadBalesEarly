@@ -9,6 +9,7 @@ The mod works for:
 - Square balers (only when turned off)
 - Round baler/wrapper combinations
 - One-Chamber Cotton Harvesters
+- Two chamber balers (cotton harvesters, nonstop balers)
 
 The threshold can be configured in the general settings (only admins can do that in multiplayer)
 
