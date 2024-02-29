@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="79">
     <author>Farmsim Tim (timmeey86)</author>
-    <version>0.1.0.2</version>
+    <version>0.1.1.0</version>
     <title>
         <en>Unload Bales Early</en>
         <de>Ballen Frühzeitig Abladen</de>
@@ -15,6 +15,7 @@ The mod works for:
 - Square balers (only when turned off)
 - Round baler/wrapper combinations
 - One-Chamber Cotton Harvesters
+- Two-Chamber Cotton Harvesters and modded two-chamber balers
 
 The threshold can be configured in the general settings (only admins can do that in multiplayer)
 
@@ -28,6 +29,7 @@ Die mod funktioniert für:
 - Quaderballenpressen (nur, wenn ausgeschaltet)
 - Rundballenpress-/wickel-Kombinationen
 - Baumwollernter mit einer Kammer
+- Baumwollernter mit zwei Kammern und gemoddete Ballenpressen mit zwei Kammern
 
 Der Schwellenwert kann in den Allgemeinen Einstellungen konfiguriert werden (nur Admins können das im Mehrspielermodus ändern)
 
@@ -49,6 +51,10 @@ Diese Mod basiert auf der Idee der "UnfinishedBales" mod von FS19, wurde aber f�
     </extraSourceFiles>
 
     <l10n>
+        <text name="ub_overload_early">
+            <en>Overload To Second Chamber</en>
+            <de>Lade in zweite Kammer über</de>
+        </text>
         <text name="ub_group_title">
             <en>Unload Bales Early</en>
             <de>Ballen Frühzeitig Abladen</de>
