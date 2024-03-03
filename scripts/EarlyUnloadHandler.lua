@@ -169,12 +169,14 @@ function EarlyUnloadHandler.getCanUnloadUnfinishedBale(baler, superFunc)
     return superFunc(baler)
 end
 
----Checks whether or not the buffer can be overloaded into the bale chamber for two-chamber balers
+---Checks whether or not the buffer can be overloaded into the bale chamber for two-chamber balers.
+---When the threshold is set to 0%, overloading will still require at least one liter as otherwise the option to unload would never show up
 ---@param baler table @The baler instance
 ---@return boolean @True if overloading is possible right now
 function EarlyUnloadHandler.getCanOverloadBuffer(baler)
     local spec = baler.spec_baler
-	return baler:getIsTurnedOn() and spec.buffer.fillUnitIndex == 2 and baler.spec_fillUnit.fillUnits[2].fillLevel >= EarlyUnloadHandler.getUnfinishedBaleThreshold(baler, 2)
+	local requiredLiters = math.max(1, EarlyUnloadHandler.getUnfinishedBaleThreshold(baler, 2))
+	return baler:getIsTurnedOn() and spec.buffer.fillUnitIndex == 2 and baler.spec_fillUnit.fillUnits[2].fillLevel >= requiredLiters
 end
 
 ---Calculates the threshold for unloading bales for the given fill unit index
