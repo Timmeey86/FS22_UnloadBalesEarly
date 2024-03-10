@@ -175,8 +175,11 @@ end
 ---@return boolean @True if overloading is possible right now
 function EarlyUnloadHandler.getCanOverloadBuffer(baler)
     local spec = baler.spec_baler
+	if spec.buffer.fillUnitIndex ~= 2 then
+		return false
+	end
 	local requiredLiters = math.max(1, EarlyUnloadHandler.getUnfinishedBaleThreshold(baler, 2))
-	return baler:getIsTurnedOn() and spec.buffer.fillUnitIndex == 2 and baler.spec_fillUnit.fillUnits[2].fillLevel >= requiredLiters
+	return baler:getIsTurnedOn() and baler.spec_fillUnit.fillUnits[2].fillLevel >= requiredLiters
 end
 
 ---Calculates the threshold for unloading bales for the given fill unit index
