@@ -15,6 +15,17 @@ The threshold can be configured in the general settings (only admins can do that
 
 This mod is based on the idea of FS19's ["UnfinishedBales"](https://github.com/Mogli12/UnfinishedBales) mod by mogli12 but was developed from scratch for FS22.
 
+## Screenshots
+
+One-chamber balers
+![Unload Early](screenshots/UnloadEarly.png)
+
+Two-chamber balers
+![Overload Early](screenshots/OverloadEarly.png)
+
+Many supported baler types
+![Overview of supported equipment](screenshots/Overview_Labelled.png)
+
 ## How to install
 
 1. Download the newest zip from the [Releases page](https://github.com/Timmeey86/FS22_UnloadBalesEarly/releases)
