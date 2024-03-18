@@ -27,8 +27,13 @@ function EarlyUnloadHandler.onBalerLoad(baler, superFunc, savegame)
     print(("%s: Forcing early unload possibility for %s %s '%s'"):format(MOD_NAME, baler.typeName, baler.brand.title, baler.configFileNameClean))
 	spec.canUnloadUnfinishedBale = true
 
-	-- TODO: Use for two-chamber cotton harvester
-	--spec.buffer.overloadingStartFillLevelPct = .1
+	-- Remember the original threshold at which overloading is supposed to start for two-chamber balers
+	if spec.buffer and spec.buffer.overloadingStartFillLevelPct then
+		spec.originalOverloadPct = spec.buffer.overloadingStartFillLevelPct
+	else
+		spec.originalOverloadPct = 1
+	end
+	spec.overloadingThresholdIsOverridden = false
 end
 
 ---Unloads the bale after the player pressed the hotkey
@@ -65,6 +70,7 @@ function EarlyUnloadHandler.onActionEventUnloading(baler, superFunc, param1, par
 	if EarlyUnloadHandler.getCanOverloadBuffer(baler) then
 		--Two-chamber vehicles: Reduce the overloading percentage so the baler starts unloading
 		spec.buffer.overloadingStartFillLevelPct = g_currentMission.unloadBalesEarlySettings:getUnloadThresholdInPercent() / 100
+		spec.overloadingThresholdIsOverridden = true
 		-- Ignore the event in this case, don't forward it
 	else
 		-- Forward the event through base game mechanism in all other cases
@@ -78,8 +84,9 @@ end
 function EarlyUnloadHandler.after_onUpdateTick(baler, ...)
 	-- Reset the overloading percentage when unloading has started
 	local spec = baler.spec_baler
-	if spec.buffer.unloadingStarted then
-		spec.buffer.overloadingStartFillLevelPct = 1
+	if spec.buffer.unloadingStarted and spec.overloadingThresholdIsOverridden then
+		spec.buffer.overloadingStartFillLevelPct = spec.originalOverloadPct
+		spec.overloadingThresholdIsOverridden = false
 	end
 end
 
@@ -175,7 +182,12 @@ end
 ---@return boolean @True if overloading is possible right now
 function EarlyUnloadHandler.getCanOverloadBuffer(baler)
     local spec = baler.spec_baler
+	-- Do not offer the option to overload if it's not a two chamber baler
 	if spec.buffer.fillUnitIndex ~= 2 then
+		return false
+	end
+	-- Göweil DLC (and maybe others): Do not offer the option if the baler always automatically overloads
+	if spec.originalOverloadPct == 0 then
 		return false
 	end
 	local requiredLiters = math.max(1, EarlyUnloadHandler.getUnfinishedBaleThreshold(baler, 2))
