@@ -6,6 +6,7 @@
         <en>Unload Bales Early</en>
         <de>Ballen Frühzeitig Abladen</de>
         <ru>Выгрузка Неполных Тюков</ru>
+        <pl>Wcześniejszy rozładunek bel</pl>
     </title>
     
     <description>
@@ -65,21 +66,25 @@ v1.0.0.1:
             <en>Overload To Second Chamber</en>
             <de>Lade in zweite Kammer über</de>
             <ru>Перегрузка во вторую камеру</ru>
+            <pl>Przeładunek do drugiej komory</pl>
         </text>
         <text name="ub_group_title">
             <en>Unload Bales Early</en>
             <de>Ballen Frühzeitig Abladen</de>
             <ru>Выгрузка неполных тюков</ru>
+            <pl>Wcześniejszy rozładunek bel</pl>
         </text>
         <text name="ub_unload_threshold_label">
             <en>Unload Threshold</en>
             <de>Ablade-Schwelle</de>
             <ru>Порог выгрузки</ru>
+            <pl>Próg rozładunku</pl>
         </text>
         <text name="ub_unload_threshold_desc">
             <en>Bales can be unloaded early if the baler is filled more than this percentage.</en>
             <de>Ballen können frühzeitig abgeladen werden, wenn die Ballenpresse mehr gefüllt ist als dieser Prozentwert.</de>
             <ru>Тюки можно выгрузить раньше, если пресс-подборщик заполнен больше чем на этот процент.</ru>
+            <pl>Bele mogą zostać rozładowane wcześniej, jeśli prasa jest wypełniona w stopniu przekraczającym ten procent.</pl>
         </text>
     </l10n>
 </modDesc>
