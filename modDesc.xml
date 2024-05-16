@@ -7,6 +7,8 @@
         <de>Ballen Frühzeitig Abladen</de>
         <ru>Выгрузка Неполных Тюков</ru>
         <pl>Wcześniejszy rozładunek bel</pl>
+        <es>Descarga Anticipada de Pacas</es>
+        <ea>Descarga Anticipada de Pacas</ea>
     </title>
     
     <description>
@@ -26,6 +28,7 @@ This mod is based on the idea of FS19's "UnfinishedBales" mod by mogli12 but was
 Changelog:
 v1.0.0.2:
 - Added Polish translation provided by Ziuta
+- Added Spanish translations provided by Ferchu425
 
 Changelog:
 v1.0.0.1:
@@ -48,11 +51,35 @@ Diese Mod basiert auf der Idee der "UnfinishedBales" mod von FS19, wurde aber f�
 Changelog
 v1.0.0.2:
 - Polnische Übersetzung hinzugefügt (bereitgestellt von Ziuta)
-
+- Spanische Übersetzung hinzugefügt (bereitgestellt von Ferchu425)
 v1.0.0.1:
 - Kompatibilität mit Göweil DLC hergestellt
 - Russische Übersetzung hinzugefügt (bereitgestellt von nagor)
 ]]></de>
+<es><![CDATA[ Este mod permite descargar pacas más allá de un umbral configurable (predeterminado: 10%)
+
+El mod funciona para:
+- Rotoempacadoras (incluidas las empacadoras de álamo)
+- Empacadoras cuadradas (solo cuando están apagadas)
+- Combinaciones de rotoempacadora/envolvedora
+- Cosechadoras de algodón de una cámara
+- Cosechadoras de algodón de dos cámaras y empacadoras de dos cámaras modificadas
+
+El umbral se puede configurar en la configuración general (solo los administradores pueden hacerlo en el modo multijugador)
+
+Este mod se basa en la idea del mod "UnfinishedBales" de FS19 de mogli12, pero se desarrolló nuevamente desde el inicio para FS22. ]]></es>
+<ea><![CDATA[ Este mod permite descargar pacas más allá de un umbral configurable (predeterminado: 10%)
+
+El mod funciona para:
+- Rotoempacadoras (incluidas las empacadoras de álamo)
+- Empacadoras cuadradas (solo cuando están apagadas)
+- Combinaciones de rotoempacadora/envolvedora
+- Cosechadoras de algodón de una cámara
+- Cosechadoras de algodón de dos cámaras y empacadoras de dos cámaras modificadas
+
+El umbral se puede configurar en la configuración general (solo los administradores pueden hacerlo en el modo multijugador)
+
+Este mod se basa en la idea del mod "UnfinishedBales" de FS19 de mogli12, pero se desarrolló nuevamente desde el inicio para FS22. ]]><</ea>
     </description>
     
     <multiplayer supported="true" />
@@ -74,24 +101,32 @@ v1.0.0.1:
             <de>Lade in zweite Kammer über</de>
             <ru>Перегрузка во вторую камеру</ru>
             <pl>Przeładunek do drugiej komory</pl>
+            <es>Descarga en Segunda Camara</es>
+            <ea>Descarga en Segunda Camara</ea>
         </text>
         <text name="ub_group_title">
             <en>Unload Bales Early</en>
             <de>Ballen Frühzeitig Abladen</de>
             <ru>Выгрузка неполных тюков</ru>
             <pl>Wcześniejszy rozładunek bel</pl>
+            <es>Descarga anticipada de pacas</es>
+            <ea>Descarga anticipada de pacas</ea>
         </text>
         <text name="ub_unload_threshold_label">
             <en>Unload Threshold</en>
             <de>Ablade-Schwelle</de>
             <ru>Порог выгрузки</ru>
             <pl>Próg rozładunku</pl>
+            <es>Umbral de Descarga</es>
+            <ea>Umbral de Descarga</ea>
         </text>
         <text name="ub_unload_threshold_desc">
             <en>Bales can be unloaded early if the baler is filled more than this percentage.</en>
             <de>Ballen können frühzeitig abgeladen werden, wenn die Ballenpresse mehr gefüllt ist als dieser Prozentwert.</de>
             <ru>Тюки можно выгрузить раньше, если пресс-подборщик заполнен больше чем на этот процент.</ru>
             <pl>Bele mogą zostać rozładowane wcześniej, jeśli prasa jest wypełniona w stopniu przekraczającym ten procent.</pl>
+            <es>Las pacas se pueden descargar si la empacadora se llena por encima de este porcentaje.</es>
+            <ea>Las pacas se pueden descargar si la empacadora se llena por encima de este porcentaje.</ea>
         </text>
     </l10n>
 </modDesc>
