@@ -56,30 +56,6 @@ v1.0.0.1:
 - Kompatibilität mit Göweil DLC hergestellt
 - Russische Übersetzung hinzugefügt (bereitgestellt von nagor)
 ]]></de>
-<es><![CDATA[ Este mod permite descargar pacas más allá de un umbral configurable (predeterminado: 10%)
-
-El mod funciona para:
-- Rotoempacadoras (incluidas las empacadoras de álamo)
-- Empacadoras cuadradas (solo cuando están apagadas)
-- Combinaciones de rotoempacadora/envolvedora
-- Cosechadoras de algodón de una cámara
-- Cosechadoras de algodón de dos cámaras y empacadoras de dos cámaras modificadas
-
-El umbral se puede configurar en la configuración general (solo los administradores pueden hacerlo en el modo multijugador)
-
-Este mod se basa en la idea del mod "UnfinishedBales" de FS19 de mogli12, pero se desarrolló nuevamente desde el inicio para FS22. ]]></es>
-<ea><![CDATA[ Este mod permite descargar pacas más allá de un umbral configurable (predeterminado: 10%)
-
-El mod funciona para:
-- Rotoempacadoras (incluidas las empacadoras de álamo)
-- Empacadoras cuadradas (solo cuando están apagadas)
-- Combinaciones de rotoempacadora/envolvedora
-- Cosechadoras de algodón de una cámara
-- Cosechadoras de algodón de dos cámaras y empacadoras de dos cámaras modificadas
-
-El umbral se puede configurar en la configuración general (solo los administradores pueden hacerlo en el modo multijugador)
-
-Este mod se basa en la idea del mod "UnfinishedBales" de FS19 de mogli12, pero se desarrolló nuevamente desde el inicio para FS22. ]]><</ea>
     </description>
     
     <multiplayer supported="true" />
